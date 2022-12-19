@@ -6,6 +6,9 @@ concurrency:
 
 on:
   workflow_dispatch:
+    inputs:
+      dummy:
+        type: boolean
 
   schedule:
     # Runs "At 20:00 on Sunday." (see https://crontab.guru)
