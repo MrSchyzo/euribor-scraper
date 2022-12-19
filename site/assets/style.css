@@ -1,0 +1,33 @@
+button {
+  background-color: hsl(203, 92%, 75%);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+button.active {
+  background-color: hsl(203, 95%, 65%);
+  font-weight: bolder;
+}
+
+.center-all {
+  align-content: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 24px;
+}
+
+.hidden {
+  display: none;
+}

@@ -43,6 +43,7 @@ function eurirs() {
     done
 }
 
+pushd site
 eurirs euribor{.csv,} && eurirs eurirs{.csv,}
 
 > assets/data.js cat <<EOF
@@ -53,3 +54,4 @@ let euriborRaw=\`
 $(cat euribor.csv)
 \`;
 EOF
+popd
