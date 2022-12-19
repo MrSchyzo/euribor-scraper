@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-function eurirs() {
+function eurirs {
     if [ "$2" != "eurirs" ] && [ "$2" != "euribor" ]; then
         >&2 echo "eurirs <filename> <eurirs/euribor>"
         return 1;
@@ -43,7 +43,7 @@ function eurirs() {
     done
 }
 
-pushd site
+cd site
 eurirs euribor{.csv,} && eurirs eurirs{.csv,}
 
 > assets/data.js cat <<EOF
@@ -54,4 +54,4 @@ let euriborRaw=\`
 $(cat euribor.csv)
 \`;
 EOF
-popd
+cd -

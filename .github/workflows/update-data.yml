@@ -6,9 +6,6 @@ concurrency:
 
 on:
   workflow_dispatch:
-    inputs:
-      dummy:
-        type: boolean
 
   schedule:
     # Runs "At 20:00 on Sunday." (see https://crontab.guru)
@@ -18,16 +15,23 @@ jobs:
   update:
     runs-on: ubuntu-20.04
     steps:
+      - name: 'What time is it?'
+        id: time
+        run: |
+          echo "now=$(date +'%Y%m%d_%H%M%S')" >> $GITHUB_OUTPUT
+          echo "prettynow=$(date +'%Y/%m/%d %H:%M:%S')" >> $GITHUB_OUTPUT
       - name: Prepare runtime
-        run: sudo apt install htmlq
+        run: sudo snap install htmlq
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Scrape euribor info
-        run: ./scrape.sh
+        run: bash ./scrape.sh
       - name: Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          branch: update-data-${{ github.event.id }}
-          commit-message: "[${{ github.event.created_at }}] update EURIBOR/EURIS data"
-          title:          "[${{ github.event.created_at }}] update EURIBOR/EURIS data"
-          body:           "Scraping from https://www.euribor.it/ - checked at ${{ github.event.created_at }}"
+          branch: update-data-${{ steps.time.outputs.now }}
+          title:          "[${{ steps.time.outputs.prettynow }}] update EURIBOR/EURIS data"
+          commit-message: "[${{ steps.time.outputs.prettynow }}] update EURIBOR/EURIS data"
+          body:           "Scraping from https://www.euribor.it/ - checked at ${{ steps.time.outputs.prettynow }}"
           delete-branch: true
           labels: patch
