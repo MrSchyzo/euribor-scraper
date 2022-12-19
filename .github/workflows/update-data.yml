@@ -6,9 +6,6 @@ concurrency:
 
 on:
   workflow_dispatch:
-    inputs:
-      dummy:
-        type: boolean
 
   schedule:
     # Runs "At 20:00 on Sunday." (see https://crontab.guru)
@@ -19,9 +16,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Prepare runtime
-        run: sudo apt install htmlq
+        run: sudo snap install htmlq
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Scrape euribor info
-        run: ./scrape.sh
+        run: bash ./scrape.sh
       - name: Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
