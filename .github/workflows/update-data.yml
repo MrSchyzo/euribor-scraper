@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Runs "At 20:00 on Sunday." (see https://crontab.guru)
-    - cron: '0 20 * * 0'
+    # Runs "At 20:00." (see https://crontab.guru)
+    - cron: '0 20 * * *'
 
 jobs:
   update:
