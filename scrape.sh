@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function eurirs() {
     if [ "$2" != "eurirs" ] && [ "$2" != "euribor" ]; then
@@ -9,6 +9,7 @@ function eurirs() {
     filename="$1"
     type="$2"
     today=`date +%Y`
+    yesterday=$(( $today - 1 ))
 
     if [ "$type" = "eurirs" ] ; then
         echo "DATE,10Y,15Y,20Y,25Y,30Y" > "$filename"
@@ -16,7 +17,7 @@ function eurirs() {
         echo "DATE,1M,3M,6M,12M" > "$filename"
     fi
 
-    for y in {1999..2019} ; do
+    for y in $(seq 1999 2019) ; do
         >&2 echo "$2 $y"
         2>/dev/null curl "https://www.euribor.it/$2-$y/" \
             | htmlq table \
@@ -29,7 +30,7 @@ function eurirs() {
             >> "$filename"
     done
 
-    for y in {2020..$(( $today - 1 ))} oggi ; do
+    for y in $(seq 2020 $yesterday) oggi ; do
         >&2 echo "$2 $y"
         2>/dev/null curl "https://www.euribor.it/$2-$y/" \
             | htmlq table \
@@ -43,3 +44,12 @@ function eurirs() {
 }
 
 eurirs euribor{.csv,} && eurirs eurirs{.csv,}
+
+> assets/data.js cat <<EOF
+let eurirsRaw=\`
+$(cat eurirs.csv)
+\`;
+let euriborRaw=\`
+$(cat euribor.csv)
+\`;
+EOF
