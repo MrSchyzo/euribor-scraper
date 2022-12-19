@@ -1,0 +1,30 @@
+name: Update euribor data
+
+concurrency:
+  group: "update"
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Runs "At 20:00 on Sunday." (see https://crontab.guru)
+    - cron: '0 20 * * 0'
+
+jobs:
+  update:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Prepare runtime
+        run: sudo apt install htmlq
+      - name: Scrape euribor info
+        run: ./scrape.sh
+      - name: Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: update-data-${{ github.event.id }}
+          commit-message: "[${{ github.event.created_at }}] update EURIBOR/EURIS data"
+          title:          "[${{ github.event.created_at }}] update EURIBOR/EURIS data"
+          body:           "Scraping from https://www.euribor.it/ - checked at ${{ github.event.created_at }}"
+          delete-branch: true
+          labels: patch
