@@ -7,7 +7,7 @@ function skipEvery(array, n) {
     return out;
 }
 
-let decimationRate = 30;
+let decimationRate = 28;
 
 let data = {
     "eurirs": {
@@ -62,21 +62,32 @@ for(var i = 0; i < euriborLines.length; i++) {
     index++;
 }
 
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+
 var index = "eurirs";
 var chart;
 
 function toEurirs() {
     index = "eurirs";
-    refreshChart();
+    refresh();
 }
 
 function toEuribor() {
     index = "euribor";
-    refreshChart();
+    refresh();
 }
 
-function refreshChart() {
+function refresh() {
     if (chart) chart.destroy();
+    document.getElementById('btn-euribor').classList.remove("active");
+    document.getElementById('btn-eurirs').classList.remove("active");
+    document.getElementById(`btn-${index}`).classList.add("active");
+
+    document.getElementById('details-euribor').classList.add("hidden");
+    document.getElementById('details-eurirs').classList.add("hidden");
+    document.getElementById(`details-${index}`).classList.remove("hidden");
 
     var ctx = document.getElementById('chart');
     chart = new Chart(ctx, {
@@ -92,11 +103,14 @@ function refreshChart() {
         options: {
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              ticks: {
+                stepSize: 0.2
+              } 
             }
           }
         }
       });
 }
 
-refreshChart();
+refresh();
