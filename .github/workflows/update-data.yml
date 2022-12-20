@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Runs "At 20:00." (see https://crontab.guru)
-    - cron: '0 20 * * *'
+    # Runs "At 17:00." (see https://crontab.guru)
+    - cron: '0 17 * * *'
 
 jobs:
   update:
@@ -19,14 +19,23 @@ jobs:
         id: time
         run: |
           echo "now=$(date +'%Y%m%d_%H%M%S')" >> $GITHUB_OUTPUT
-          echo "prettynow=$(date +'%Y/%m/%d %H:%M:%S')" >> $GITHUB_OUTPUT
+          echo "prettynow=$(date +'%c %Z')" >> $GITHUB_OUTPUT
       - name: Prepare runtime
         run: sudo snap install htmlq
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Scrape euribor info
         run: bash ./scrape.sh
+      - name: Check meaningful changes in assets/site/data.js
+        id: change
+        run: |
+          if [ -n "$(git status -s site/assets/data.js)" ] ; then
+            echo "presence=true" | tee $GITHUB_OUTPUT
+          else
+            echo "No meaningful edits"
+          fi
       - name: Pull Request
+        if: ${{ steps.change.outputs.presence == 'true' }}
         uses: peter-evans/create-pull-request@v4
         with:
           branch: update-data-${{ steps.time.outputs.now }}

@@ -1,13 +1,13 @@
 function skipEvery(array, n) {
     var out = []
     var index = 0;
-    for(var i = 0; i < array.length; i+=n) {
+    for (var i = 0; i < array.length; i+=n) {
         out[index++] = array[i];
     }
     return out;
 }
 
-let decimationRate = 28;
+let decimationRate = 27;
 
 let data = {
     "eurirs": {
@@ -27,10 +27,10 @@ let data = {
     }
 }
 
-let eurirsLines = skipEvery(eurirsRaw.split("\n"), decimationRate);
+let eurirsToShow = skipEvery(eurirsRaw.split("\n"), decimationRate);
 var index = 0;
-for(var i = 0; i < eurirsLines.length; i++) {
-    let line = eurirsLines[i];
+for (var i = 0; i < eurirsToShow.length; i++) {
+    let line = eurirsToShow[i];
     let datapoint = line.split(",").map(x => x.trim())
 
     if (line.startsWith("DATE") || line === "") continue;
@@ -45,10 +45,29 @@ for(var i = 0; i < eurirsLines.length; i++) {
     index++;
 }
 
-let euriborLines = skipEvery(euriborRaw.split("\n"), decimationRate);
+let eurirsTable = document.getElementById("table-eurirs");
+let eurirsLines = eurirsRaw.split("\n");
+for (var i = 0; i < eurirsLines.length; i++) {
+    let line = eurirsLines[i];
+    let datapoint = line.split(",").map(x => x.trim())
+
+    if (line.startsWith("DATE") || line === "") continue;
+
+    let tr = document.createElement("tr");
+    datapoint.map(x => {
+        let td = document.createElement("td");
+        td.innerText = x;
+        return td;
+    }).forEach(x => tr.appendChild(x));
+
+    eurirsTable.children[0].appendChild(tr);
+}
+
+
+let euriborToShow = skipEvery(euriborRaw.split("\n"), decimationRate);
 index = 0;
-for(var i = 0; i < euriborLines.length; i++) {
-    let line = euriborLines[i];
+for (var i = 0; i < euriborToShow.length; i++) {
+    let line = euriborToShow[i];
     let datapoint = line.split(",").map(x => x.trim())
 
     if (line.startsWith("DATE") || line === "") continue;
@@ -61,6 +80,26 @@ for(var i = 0; i < euriborLines.length; i++) {
 
     index++;
 }
+
+let euriborTable = document.getElementById("table-euribor");
+let euriborLines = euriborRaw.split("\n");
+for (var i = 0; i < euriborLines.length; i++) {
+    let line = euriborLines[i];
+    let datapoint = line.split(",").map(x => x.trim())
+
+    if (line.startsWith("DATE") || line === "") continue;
+
+    let tr = document.createElement("tr");
+    datapoint.map(x => {
+        let td = document.createElement("td");
+        td.innerText = x;
+        return td;
+    }).forEach(x => tr.appendChild(x));
+
+    euriborTable.children[0].appendChild(tr);
+}
+
+document.getElementById("last-updated").innerText = lastUpdated || 2022;
 
 /////////////////////////////////////
 /////////////////////////////////////

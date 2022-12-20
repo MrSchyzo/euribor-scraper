@@ -1,3 +1,39 @@
+* {
+  font-family: Roboto, Arial, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  display: table;
+}
+
+.footer {
+  display: table-row;
+  align-items: center;
+  background-color: hsl(203, 42%, 95%);
+}
+
+.header {
+  display: table-row;
+  background-color: hsl(203, 42%, 95%);
+}
+
+.header > div {
+  display: flex;
+  margin: 24px;
+}
+
+.header > div > h1 {
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+  text-align: center;
+  font-size: 1.75em;
+}
+
+
 button {
   background-color: hsl(203, 92%, 75%);
   border: none;
@@ -9,6 +45,7 @@ button {
   font-size: 16px;
   margin-left: 16px;
   margin-right: 16px;
+  margin-top: 16px;
 }
 
 button.active {
@@ -30,4 +67,55 @@ button.active {
 
 .hidden {
   display: none;
+}
+
+.details > details {
+  margin: 4px;
+}
+
+.details > details summary {
+  font-size: 1.5em;
+  margin: 8px;
+  text-align: center;
+}
+
+.details > details table {
+  font-size: 1.35em;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.details > details table > tbody > tr > th {
+  font-weight: bolder;
+  background-color: lightblue;
+  border-bottom: 3px;
+  border-color: black;
+  padding: 0.5em 1em;
+}
+
+.details > details table td {
+  padding: 0.5em 1em;
+}
+
+.details > details table tr:nth-child(odd) {
+  background-color: hsl(203, 32%, 95%);
+}
+
+div.chart-container {
+  margin: 24px;
+}
+
+.footer > div {
+  display: flex;
+  margin: 24px;
+}
+
+.footer > div > div {
+  margin: auto;
+}
+
+.scrollable {
+  max-height: 512px;
+  overflow-y: scroll;
+  border: 1px;
 }

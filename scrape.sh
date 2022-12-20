@@ -54,4 +54,9 @@ let euriborRaw=\`
 $(cat euribor.csv)
 \`;
 EOF
+
+> assets/last-update.js cat <<EOF
+let lastUpdated='$(date '+%c %Z')';
+EOF
+
 cd -
