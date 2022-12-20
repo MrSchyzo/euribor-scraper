@@ -1,1 +1,1 @@
-let lastUpdated='Tue 20 Dec 23:20:43 2022 CET';
+let lastUpdated='Tue Dec 20 22:29:47 2022 UTC';
