@@ -93,6 +93,15 @@ button.active {
   padding: 0.5em 1em;
 }
 
+.details > details select {
+  background: aliceblue;
+  border: none;
+  padding: 8px;
+  font-size: 1.3em;
+  margin: 4px 43%;
+  border-bottom: 1px solid;
+}
+
 .details > details table td {
   padding: 0.5em 1em;
 }
