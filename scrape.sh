@@ -27,6 +27,7 @@ function eurirs {
             | sed 's/||/\n/g;s/|/,/g;s/^,//g;s/,$//g;s/\(EURIRS|EURIBOR\)/DATE/g;s/ ANNI/Y/g;s/ MESI/M/;s|\(..\)/\(..\)|'"$y"'/\2/\1|g' \
             | tail -n +2 \
             | sort \
+            | sed '/^$/d' \
             >> "$filename"
     done
 
@@ -39,6 +40,7 @@ function eurirs {
             | sed 's!/*\(EURIRS|EURIBOR\)!DATE!g;s/ ANNI/Y/g;s/ MESI/M/;s|\(..\)/\(..\)|'"$y"'/\2/\1|g;s|10(01|'"$y"'/01/10|g;s/oggi/'"$today"'/g' \
             | tail -n+3 \
             | sort \
+            | sed '/^$/d' \
             >> "$filename"
     done
 }
