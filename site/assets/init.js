@@ -102,7 +102,7 @@ let data = {
         first = false;
     }
 
-    document.getElementById("last-updated").innerText = lastUpdated || 2022;
+    document.getElementById("last-updated").innerText = lastUpdated || 2023;
 }
 
 
