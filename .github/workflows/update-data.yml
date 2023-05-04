@@ -24,6 +24,9 @@ jobs:
         run: sudo snap install htmlq
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: 0
       - name: Scrape euribor info
         run: bash ./scrape.sh
       - name: Check meaningful changes in assets/site/data.js
@@ -38,7 +41,7 @@ jobs:
         if: ${{ steps.change.outputs.presence == 'true' }}
         uses: peter-evans/create-pull-request@v4
         with:
-          branch: update-data-${{ steps.time.outputs.now }}
+          branch: update-data
           title:          "[${{ steps.time.outputs.prettynow }}] update EURIBOR/EURIS data"
           commit-message: "[${{ steps.time.outputs.prettynow }}] update EURIBOR/EURIS data"
           body:           "Scraping from https://www.euribor.it/ - checked at ${{ steps.time.outputs.prettynow }}"
