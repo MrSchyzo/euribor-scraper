@@ -1,4 +1,13 @@
+build
+dist
+.cache
+__pycache__
+*egg-info
+*.pyc
+.env
 .DS_Store
+.vscode/
+venv
 
 euribor.csv
 eurirs.csv
