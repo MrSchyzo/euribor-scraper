@@ -21,7 +21,7 @@ jobs:
           echo "now=$(date +'%Y%m%d_%H%M%S')" >> $GITHUB_OUTPUT
           echo "prettynow=$(date +'%c %Z')" >> $GITHUB_OUTPUT
       - name: Prepare runtime
-        run: sudo apt update && sudo apt upgrade -y && sudo apt install python3 -y
+        run: sudo apt update && sudo apt install python3 -y
       - name: Checkout code
         uses: actions/checkout@v3
         with:
