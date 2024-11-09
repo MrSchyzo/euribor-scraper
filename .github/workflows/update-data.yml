@@ -7,9 +7,10 @@ concurrency:
 on:
   workflow_dispatch:
 
-  schedule:
+  # disabled until I find another source for scraping euribor and eurirs rates
+  # schedule:
     # Runs "At 17:00." (see https://crontab.guru)
-    - cron: '0 17 * * *'
+    # - cron: '0 17 * * *'
 
 jobs:
   update:
